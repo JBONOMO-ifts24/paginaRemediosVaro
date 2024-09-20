@@ -33,6 +33,7 @@
     <script src="/script.js" defer></script>
   </head>
   <body>
+    <!-- Barra de navegación -->
     <nav class="navbar navbar-expand-md navbar-dark navbar-mod">
       <!-- Iconito -->
       <a class="navbar-brand" href="index.html">
@@ -76,51 +77,52 @@
         </ul>
       </div>
     </nav>
+    <!-- Fin barra de navegación -->
 
     <div class="container-fluid">
       <h1>Opiniones</h1>
-      <p>Podes dejar tu opinión en este muro</p>
+      <p>Podes dejar tu opinión en el muro</p>
       <p>Decinos que te parece la obra de Remedios Varo</p>
+      <div class="row">
+        <div class="col" id="formulario">
+          <form id="miFormulario">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input
+                type="text"
+                id="nombre"
+                class="form-control"
+                name="nombre"
+                required
+              /><br />
+            </div>
 
-      <form action="show_data.html" target="_blank">
-        <div class="form-group">
-          <label for="nombre">Nombre:</label>
-          <input
-            type="text"
-            id="nombre"
-            class="form-control"
-            name="nombre"
-            required
-          /><br />
-        </div>
-
-        <div class="form-group">
-          <label for="pais">País:</label>
-          <select id="pais" name="pais" class="form-control">
+            <div class="form-group">
+              <label for="mensaje">Mensaje:</label>
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                class="form-control"
+                rows="4"
+                required
+              ></textarea>
+            </div>
             <br />
-            <option value="argentina">Argentina</option>
-            <option value="brasil">Brasil</option>
-            <option value="bolivia">Bolivia</option>
-            <option value="chile">Chile</option>
-            <option value="espana">España</option>
-            <option value="mexico">México</option>
-            <option value="otro">Otro</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="mensaje">Mensaje:</label>
-          <textarea
-            id="mensaje"
-            name="mensaje"
-            class="form-control"
-            rows="4"
-            required
-          ></textarea>
-        </div>
-        <br />
 
-        <input type="submit" class="btn btn-primary" value="Enviar" />
-      </form>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="guardarDatos()"
+            >
+              Guardar
+            </button>
+          </form>
+        </div>
+        <div class="col" id="muro">
+          <h2>El Muro</h2>
+          <div id="datosGuardados"></div>
+        </div>
+      </div>
     </div>
     <br />
     <footer>
