@@ -96,7 +96,8 @@ function borrar(item) {
 function editar(item) {
   //Toma el dato que quiere cambiar el  usuario.
   let mensaje = window.prompt("Cambiar el mensaje");
-  mensaje = mensaje + " [editado] ";
+  const fechaNueva = new Date().toLocaleDateString("es-ES");
+  mensaje = mensaje + " [editado el " + fechaNueva + "] ";
   //tomamos los datos del localStorage
   const datosGuardados = JSON.parse(localStorage.getItem("datos"));
   //modificamos el registro que se seleccinó.
