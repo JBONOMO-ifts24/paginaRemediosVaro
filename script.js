@@ -4,19 +4,39 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 function guardarDatos() {
-  const nombre = document.getElementById("nombre").value;
-  const mensaje = document.getElementById("mensaje").value;
+  let nombre = document.getElementById("nombre").value;
+  let mensaje = document.getElementById("mensaje").value;
   const fecha = new Date().toLocaleDateString("es-ES");
-  ///Agregar la validación de los campos nombre y mensaje
+  const avi = document.getElementById("avisos");
 
-  let datosGuardados = JSON.parse(localStorage.getItem("datos")) || [];
-  datosGuardados.push({ fecha, nombre, mensaje });
+  nombre = nombre.trim(); //Se sacan los espacios en blanco adelante y atrás del string
+  mensaje = mensaje.trim();
 
-  localStorage.setItem("datos", JSON.stringify(datosGuardados));
+  //Validación de los datos en los campos nombre y mensaje
+  if (nombre.length < 3 || mensaje.length < 3) {
+    const p = document.createElement("div");
+    let mensaje =
+      '<div class="alert alert-danger" role="alert">Los datos ingresados no son correctos</div>';
 
-  document.getElementById("nombre").value = "";
-  document.getElementById("mensaje").value = "";
-  mostrarDatos();
+    p.innerHTML = mensaje;
+    avi.appendChild(p);
+    document.getElementById("nombre").value = "";
+    document.getElementById("mensaje").value = "";
+
+    setTimeout(() => {
+      avi.innerHTML = "";
+    }, 4000);
+  } else {
+    let datosGuardados = JSON.parse(localStorage.getItem("datos")) || [];
+    datosGuardados.push({ fecha, nombre, mensaje });
+
+    localStorage.setItem("datos", JSON.stringify(datosGuardados));
+
+    document.getElementById("nombre").value = "";
+    document.getElementById("mensaje").value = "";
+    avi.innerHTML = "";
+    mostrarDatos();
+  }
 }
 
 function mostrarDatos() {
@@ -26,27 +46,26 @@ function mostrarDatos() {
 
   if (datosGuardados.length > 0) {
     datosGuardados.forEach((dato, index) => {
-      const p = document.createElement("p");
+      const p = document.createElement("div");
       p.innerHTML =
-        "<div id= " +
-        index +
-        "> El día " +
+        "<p>El día " +
         dato.fecha +
         "<strong> " +
         dato.nombre +
-        "</strong> dijo: <strong>" +
+        "</strong> escribió: <strong>" +
         dato.mensaje +
-        " <strong> <button onclick= editar(" +
+        " </strong> <button class='btn btn-primary' onclick= editar(" +
         index +
-        ")>editar</button> <button onclick= borrar(" +
+        ")>✏️</button> <button class='btn btn-primary' onclick= borrar(" +
         index +
-        ")>borrar</button></div>";
+        ")>❌</button></p>";
       datosDiv.appendChild(p);
     });
   } else {
-    const p2 = document.createElement("p");
-    p2.innerHTML = "<p>No hay mensajes 😞 </p>";
+    const p = document.createElement("div");
+    p.innerHTML = "<p>No hay mensajes 😞 </p>";
     console.log("No hay mensajes 😞");
+    datosDiv.appendChild(p);
   }
 }
 
@@ -60,11 +79,24 @@ function borrar(item) {
   localStorage.setItem("datos", JSON.stringify(datosGuardados));
   //recargamos el listado
   mostrarDatos();
+  //Se avisa que se guardó corractamente la info
+  const avi = document.getElementById("avisos");
+  const p = document.createElement("div");
+  let mensaje =
+    '<div class="alert alert-success" role="alert">Mensaje Borrado 💀</div>';
+
+  p.innerHTML = mensaje;
+  avi.appendChild(p);
+
+  setTimeout(() => {
+    avi.innerHTML = "";
+  }, 4000);
 }
 
 function editar(item) {
   //Toma el dato que quiere cambiar el  usuario.
   let mensaje = window.prompt("Cambiar el mensaje");
+  mensaje = mensaje + " [editado] ";
   //tomamos los datos del localStorage
   const datosGuardados = JSON.parse(localStorage.getItem("datos"));
   //modificamos el registro que se seleccinó.

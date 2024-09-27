@@ -5,8 +5,8 @@ Ahora mejorando la página para la materia BackEnd.
 
 # To-Do
 
-### + Agregar una página que use la persistencia para mostrar mensajes.
-### + Agregar validacion en el formulario.
+### + Agregar validacion en el formulario donde se dejan mensajes.
+
 ### + Agregar usuarios a la página.
 
 # Hecho en Glitch!
